@@ -1,6 +1,6 @@
 import './styles.css';
 import React from 'react';
-import OrderSummaryItem from './orderSummaryItem'
+// import OrderSummaryItem from './orderSummaryItem'
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
@@ -16,10 +16,8 @@ const OrderForm = () => {
 
   useEffect(() => {
     if (token) {
-      //specify the localhost
     const basketID = window.localStorage.getItem("currentBasketID")
-    fetch(`/orders/${basketID}`, { 
-      // mode: 'cors',
+    fetch(`/orders/filled/${basketID}`, { 
       method: "get",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -27,6 +25,7 @@ const OrderForm = () => {
     })
       .then(res => res.json())
       .then((data) => {
+        console.log('ORIGINAL DATA', data)
         setToken(window.localStorage.getItem("token"));
         setCompanyName(data.companyName)
         setOrderSummary(data.orders)
@@ -40,8 +39,12 @@ const OrderForm = () => {
   }, []);
 
 
-  const orderSumarryDisplay = orderSummary.map((orderID) => {
-    return <OrderSummaryItem key={ orderID } orderID={orderID}></OrderSummaryItem>
+  const orderSumarryDisplay = orderSummary.map(({batchQuantity, itemName, pricePerBatch}) => {
+    return (    
+    <div>
+      <p>-----------------------------------------</p>
+      <p>{batchQuantity} | {itemName} | £{pricePerBatch}</p>
+    </div>)
   })
 
   const handleSubmit = (event) => {
