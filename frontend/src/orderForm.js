@@ -87,7 +87,7 @@ const OrderForm = () => {
         console.log("CURRENT BASKET UPDATED:", data[0].currentBasketID )
         window.localStorage.setItem("currentBasketID", data[0].currentBasketID)
         console.log("LOCAL STORAGE:", window.localStorage.getItem("currentBasketID") )
-        navigate("/");
+        navigate("/confirmation");
         
       })
       
