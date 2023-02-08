@@ -50,8 +50,8 @@ describe("updateOrder", () => {
     await user.save();
     const order = new Order({
       _id: req.params.order_id,
-      date_of_order: new Date(),
-      date_required: '02/02/2023'
+      dateOfOrder: new Date(),
+      dateRequired: '02/02/2023'
     });
     await order.save();
 
@@ -62,6 +62,6 @@ describe("updateOrder", () => {
       token: expect.any(String)
     });
     const updatedOrder = await Order.findById(req.params.order_id);
-    expect(updatedOrder.date_required).toEqual(req.body.date_required);
+    expect(updatedOrder.dateRequired).toEqual(req.body.dateRequired);
   });
 });

@@ -47,23 +47,22 @@ const OrderForm = () => {
     </div>)
   })
 
+  // updates order with the date
   const handleSubmit = (event) => {
     event.preventDefault();
     if (dateNeededBy !== null){
-      // debugger;
       fetch(`/orders/update/${orderId}`, {
-        method: "put",
+        method: "POST",
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ 
-          date_required: dateNeededBy
+          dateRequired: dateNeededBy
         })
       })
       .then(res => res.json())
       .then((data) => {
-        // console.log(data);
+        console.log('ORDER DATE UPDATE RESPONSE:', data);
       })
       .catch(error => console.error(error));
 
