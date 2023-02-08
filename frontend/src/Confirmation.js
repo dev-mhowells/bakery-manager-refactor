@@ -61,18 +61,42 @@ const Confirmation = () => {
 
 // confirmation message
 return (
-  <div className="flex place-content-evenly mt-20">
-    <div className="card bg-green drop-shadow-xl place-content-center border-2 border-beige w-100">
+  <div>
+  <div class="navbar h-10 bg-lightgreen">
+  <div class="flex-1">
+    <h1 class="text-2xl">Bakery Manager</h1>
+    </div>
+    <div class="flex-none">
+    <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+            <div class="w-10 rounded-full ">
+            <img src="logoBM8.png" />
+            </div>
+          </label>
+        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 text-black">
+          <li>
+            <a href="/profile" class="justify-between">
+              Profile
+              <span class="badge">Check it out!</span>
+            </a>
+          </li>
+          <li><a href="/login">Logout</a></li>
+        </ul>
+  </div>
+</div>
+</div>
+  <div className="flex mt-20 place-content-evenly">
+    <div className=" card bg-lightgreen drop-shadow-xl place-content-center border-beige w-100">
   {/* <figure><img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure> */}
       <div className="card-body">
         <div className="text-center">
-          <h1>Order Invoice</h1>
+          <h1 className="mb-12 text-3xl text-center font-heading">Order Invoice</h1>
         </div>
-  <div className="orderText text-center" data-cy="confirmation_message">
+  <div className="text-center orderText" data-cy="confirmation_message">
           <h2><b>Your order is confirmed</b></h2></div>
-    <h2 className="orderID text-center">Order ID: {orderId}</h2>
+    <h2 className="text-center orderID">Order ID: {orderId}</h2>
   
-    {/* <p className="order-name text-center" data-cy="order contents"></p> */}
+    {/* <p className="text-center order-name" data-cy="order contents"></p> */}
     <div className="overflow-x-auto">
   <table className="table w-full">
     <thead>
@@ -88,10 +112,12 @@ return (
     </tbody>
   </table>
 </div>
-    <div className="card-actions justify-center">
-      <button className="btn btn-primary"><a href ='/'>Home</a></button>
+    <div className="justify-center card-actions">
+      <button className=
+      "btn "><a href ='/'>Home</a></button>
     </div>
   </div>
+</div>
 </div>
 </div>
 )

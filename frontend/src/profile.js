@@ -2,6 +2,7 @@ import React from 'react';
 import ClearLocalStorage from './logout';
 
 export default function Profile() {
+    
     return (
         <body>
             <div className='flex'>
@@ -22,22 +23,11 @@ export default function Profile() {
             </div>
 {/* cards that contain 3 elements */}
             <div className="fixed mt-40 top-80 left-80 right-30 card-body bg-darkgreen card shadow-xl w-96">
-                <label htmlFor="my-modal" className="btn text-bone bg-beige">Current orders</label>
+                <label htmlFor="my-modal" className="btn text-bone bg-beige">All orders</label>
                 <input type="checkbox" id="my-modal" className="modal-toggle" />
                 <div className="modal">
                     <div className="modal-box">
                         <h3 className="font-bold text-lg">Pull in orders coming up</h3>
-                        <p className="py-4">from some sort of array we make</p>
-                        <div className="modal-action">
-                            <label htmlFor="my-modal" className="btn bg-beige">Close</label>
-                        </div>
-                    </div>
-                </div>
-            <label htmlFor="my-modal" className="btn text-bone bg-beige">Previous orders</label>
-            <input type="checkbox" id="my-modal" className="modal-toggle" />
-                <div className="modal">
-                    <div className="modal-box">
-                        <h3 className="font-bold text-lg">Pull in orders due for today</h3>
                         <p className="py-4">from some sort of array we make</p>
                         <div className="modal-action">
                             <label htmlFor="my-modal" className="btn bg-beige">Close</label>

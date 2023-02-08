@@ -23,6 +23,7 @@ export default function Orders(props) {
         // JSON.stringify(batchOrder)
         return <BatchOrder batchOrder={batchOrder}></BatchOrder>
     })
+
     
     return (
         <div>
