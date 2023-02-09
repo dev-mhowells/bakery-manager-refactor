@@ -11,6 +11,7 @@ function App() {
   const [user, setUser] = useState([]);
   
   useEffect(() => {
+    // render bakery items on page
     fetch("/items", {
     })
       .then(response => response.json())
@@ -19,6 +20,7 @@ function App() {
         setUpdateBasket(!updateBasket)
       })
 
+    // set the current user and basket
     if (userID){
       fetch(`/users/${userID}`, {
       })

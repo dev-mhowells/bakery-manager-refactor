@@ -3,6 +3,10 @@ import { useState, useEffect } from 'react';
 
 export default function Item(props) {
 
+  console.log('THIS IS THE FOOD', props.food._id)
+  // item name can be used as a reference because this
+  // is passed to batch.. update by item name
+
   const [counter, setCounter] = useState(0)
   const [basketText, setBasketText] = useState("Add to Basket"); 
   const [inBasket, setInBasket] = useState(false); 
@@ -43,28 +47,45 @@ export default function Item(props) {
     }
   }, [props.updateBasket])
 
-  
+  // creates a batch with body and adds it to an order by param,
+  // returns batch
+// const addBatchToOrder = async () => {
+//   console.log("BASKETID", basketID)
+//     let response = await fetch(`/orders/addBatch/${basketID}`, {
+//       method: 'post',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//         body: JSON.stringify({ itemName: props.food.itemName, batchQuantity: counter, pricePerBatch: props.food.price})
+//       })
+//     if (response.status !== 201) {
+//       console.log("post failed, Error status:" + response.status)
+//     } else {
+//       let data = await response.json()
+//       console.log("BATCH ORDER ADDED:", data)
+//       props.setUpdateBasket(!props.updateBasket)
+//       setBatchID(data.batchOrder._id)
+//     }
+//   }
 
-
-const addBatchToOrder = async () => {
-  console.log("BASKETID", basketID)
-    let response = await fetch(`/orders/addBatch/${basketID}`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-        body: JSON.stringify({ itemName: props.food.itemName, batchQuantity: counter, pricePerBatch: props.food.price})
-      })
-    if (response.status !== 201) {
-      console.log("post failed, Error status:" + response.status)
-    } else {
-      console.log("Batch added: " + response.status)
-      let data = await response.json()
-      console.log("BATCH ORDER ADDED:", data)
-      props.setUpdateBasket(!props.updateBasket)
-      setBatchID(data.batchOrder._id)
+  const addBatchToOrder = async () => {
+    console.log("BASKETID", basketID)
+      let response = await fetch(`/orders/addBatch/${basketID}`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+          body: JSON.stringify({ itemName: props.food.itemName, batchQuantity: counter, pricePerBatch: props.food.price})
+        })
+      if (response.status !== 201) {
+        console.log("post failed, Error status:" + response.status)
+      } else {
+        let data = await response.json()
+        console.log("BATCH ORDER ADDED:", data)
+        props.setUpdateBasket(!props.updateBasket)
+        setBatchID(data.batchOrder._id)
+      }
     }
-  }
 
   const removeBatchFromOrder = async () => {
     let response = await fetch(`/orders/delete/batch/${batchID}`, {

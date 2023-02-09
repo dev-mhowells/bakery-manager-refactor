@@ -2,7 +2,7 @@ require('dotenv').config({path: './.env.development'});
 const express = require("express");
 const mongoose = require("mongoose");
 const itemsRouter = require("./routes/items");
-const ordersRouter = require("./routes/orders");
+const basketRouter = require("./routes/basket");
 const batchOrdersRouter = require("./routes/batchOrders");
 const bakersRouter = require("./routes/bakers");
 const usersRouter = require("./routes/users");
@@ -40,7 +40,7 @@ const tokenChecker = (req, res, next) => {
 app.use(express.json())
 app.use("/items", itemsRouter);
 // app.use("/orders",tokenChecker,ordersRouter);
-app.use("/orders",ordersRouter);
+app.use("/orders",basketRouter);
 app.use("/batchOrders", batchOrdersRouter);
 app.use("/bakers", bakersRouter);
 app.use("/users", usersRouter);

@@ -1,11 +1,11 @@
 const BatchOrder = require("../models/BatchOrder");
-const Order = require("../models/order");
+const Basket = require("../models/basket");
 const TokenGenerator = require("../models/token_generator");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const Item = require("../models/item");
 
-const OrdersController = {
+const BasketController = {
   getAll: (req, res) => {
     Order.find({userId: req.user_id})
     .exec((err, orders) => {
@@ -44,12 +44,12 @@ const OrdersController = {
   //   }
   // )},
   addBatch: async (req, res) => {
+    // creates a batch
     const orderID = req.params.orderID
-    const orderRef = orderID;
     const batchOrder = new BatchOrder(req.body);
     batchOrder.save();
-    
-    await Order.findByIdAndUpdate(orderRef, { $push: { orders: batchOrder } });
+    // adds a batch to the order passed in to params
+    await Basket.findByIdAndUpdate(orderID, { $push: { orders: batchOrder } });
     
     res.status(201).json({batchOrder: batchOrder})
   },
@@ -64,7 +64,7 @@ const OrdersController = {
     const filter = { _id: req.params.orderID };
     //Firstly filter the through the orders DB.
     //Then populate the variable 'batchOrders' with all in info in the orders field 
-    const batchOrders = await Order.find(filter).populate('orders').exec()
+    const batchOrders = await Basket.find(filter).populate('orders').exec()
     res.status(200).json(batchOrders)
   },
   // getOrderByID: async (req, res) => {
@@ -76,7 +76,7 @@ const OrdersController = {
   // },
   getOrderByIDFilled: async (req, res) => {
     const orderID = req.params.orderID;
-    let order = await Order.findById(orderID).populate('orders').exec()
+    let order = await Basket.findById(orderID).populate('orders').exec()
     console.log("ORDER:", order)
     res.status(200).json(order)
 
@@ -84,7 +84,7 @@ const OrdersController = {
   deleteBatchByID: async (req, res) => {
     const orderID = req.body.orderID;
 
-    let order = await Order.findById(orderID)
+    let order = await Basket.findById(orderID)
     // console.log("ORDER:", order)
     const filter = { _id: orderID};
 
@@ -95,14 +95,14 @@ const OrdersController = {
     const newBatchOrders = previousBatchOrders.remove(req.params.batchID)
     console.log("NEW BATCH ORDERS", newBatchOrders)
     const update = { orders: newBatchOrders };
-    await Order.findOneAndUpdate(filter, update);
+    await Basket.findOneAndUpdate(filter, update);
     
     //Remove batch order from BatchOrder DB
     await BatchOrder.deleteOne({ _id: req.params.batchID})
     console.log("Batches in Order", order.orders)
     res.status(201).json(order)
   },
-  
+
   // UPDATES ORDER WITH DATE ON CLICK CONFIRM
   updateOrder: async(req, res) => {
 
@@ -114,7 +114,7 @@ const OrdersController = {
     // specifies that updated document should be returned
     // from operation below
     const options = { new: true };
-    const order = await Order.findByIdAndUpdate(req.params.order_id, update, options)
+    const order = await Basket.findByIdAndUpdate(req.params.order_id, update, options)
     .populate('orders').exec();
 
     res.status(201).json({ order });
@@ -123,8 +123,8 @@ const OrdersController = {
   updateOrderPrice:async(req, res) => {
     const filter = { _id: req.params.order_id};
     const update = { totalPrice:  req.body.totalPrice}
-    await Order.findByIdAndUpdate( req.params.order_id, update);
-    const order = await Order.find(filter)
+    await Basket.findByIdAndUpdate( req.params.order_id, update);
+    const order = await Basket.find(filter)
     res.status(202).json(order);
   }
 }
@@ -132,4 +132,4 @@ const OrdersController = {
 
 
 
-module.exports = OrdersController
+module.exports = BasketController

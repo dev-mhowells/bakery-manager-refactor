@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const {ObjectId} = require('mongodb')
 const Schema = mongoose.Schema;
-const Item = require('../models/item')
+const Item = require('./item')
 
-const OrderSchema = new Schema({
+const BasketSchema = new Schema({
   userId: String,
   companyName: { type: String },
   orders: [{type: ObjectId, ref: "BatchOrder"}],
@@ -13,7 +13,7 @@ const OrderSchema = new Schema({
 });
 
 // Export model
-const Order = mongoose.model("Order", OrderSchema);
+const Basket = mongoose.model("Basket", BasketSchema);
 
-module.exports = Order;
+module.exports = Basket;
 

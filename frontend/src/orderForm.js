@@ -19,13 +19,12 @@ const OrderForm = () => {
     const basketID = window.localStorage.getItem("currentBasketID")
     fetch(`/orders/filled/${basketID}`, { 
       method: "get",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      // headers: {
+        // Authorization: `Bearer ${token}`,
+      // },
     })
       .then(res => res.json())
       .then((data) => {
-        console.log('ORIGINAL DATA', data)
         setToken(window.localStorage.getItem("token"));
         setCompanyName(data.companyName)
         setOrderSummary(data.orders)
@@ -37,15 +36,6 @@ const OrderForm = () => {
       // navigate("/ABC");
     }
   }, []);
-
-
-  const orderSumarryDisplay = orderSummary.map(({batchQuantity, itemName, pricePerBatch}) => {
-    return (    
-    <div>
-      <p>-----------------------------------------</p>
-      <p>{batchQuantity} | {itemName} | £{pricePerBatch}</p>
-    </div>)
-  })
 
   // updates order with the date
   const handleSubmit = (event) => {
@@ -66,12 +56,14 @@ const OrderForm = () => {
       })
       .catch(error => console.error(error));
 
+      // creates a new Order/Basket and updates currentBasket of User 
+      // with new basket
       fetch(`/users/${window.localStorage.getItem("currentUserID")}`, {
-        method: "put",
+        method: "PUT",
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({companyName: companyName})
+        body: JSON.stringify({companyName})
       }).then(res => res.json())
         .then((data) => {
 
@@ -84,6 +76,15 @@ const OrderForm = () => {
       
     };
   }
+
+  const orderSummaryDisplay = orderSummary.map(({batchQuantity, itemName, pricePerBatch}) => {
+    return (    
+    <div>
+      <p>-----------------------------------------</p>
+      <p>{batchQuantity} | {itemName} | £{pricePerBatch}</p>
+    </div>)
+  })
+
   return (
     <div>
     <div class="navbar h-10 bg-lightgreen">
@@ -152,7 +153,7 @@ const OrderForm = () => {
                   ease-in-out
                   m-0
                   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" data-cy="order_summary"
-                  placeholder="Order Summary">{orderSumarryDisplay}
+                  placeholder="Order Summary">{orderSummaryDisplay}
                   </div>
               </div>
               <div className="mb-6 form-group">

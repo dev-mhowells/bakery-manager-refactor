@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const Order = require("../models/order");
+const Order = require("../models/basket");
 
 const UsersController = {
   getAll: (req, res) => {
@@ -47,8 +47,8 @@ const UsersController = {
     res.status(200).json(user)
   },
   updateUserBasket: async (req,res) => {
-
-    const newBasket = new Order ({companyName: req.body.companyName, order: [], dateOfOrder:"", dateRequired :""})
+    // creates new order with companyName as ref to user?
+    const newBasket = new Order ({companyName: req.body.companyName, order: [], dateOfOrder: "", dateRequired : ""})
     newBasket.save(async (err) => {
       if (err) {
         throw err;
@@ -56,12 +56,10 @@ const UsersController = {
     })
 
     const userID = req.params.userID
-    console.log(userID)
-
+    // find, update and respond with user with new currentBasket
     const filter = { _id: userID};
     await User.findByIdAndUpdate(userID,  { currentBasketID: newBasket._id });
     const user = await User.find(filter)
-    console.log("updated user:", user)
     res.status(202).json(user)
     },
   // Delete: (req, res) => {
