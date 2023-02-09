@@ -1,7 +1,7 @@
 const app = require("../../index");
 const request = require("supertest");
 const Order = require('../../models/basket');
-const Orders = require('../../controllers/orders')
+const Orders = require('../../controllers/basket')
 const User = require('../../models/user');
 const mongoose = require("mongoose");
 require('dotenv').config({path: './.env.test'});

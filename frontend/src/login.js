@@ -28,7 +28,7 @@ export default function LogInForm({}) {
 					console.log('this is all the data', data)
 					console.log("you are login");
 					localStorage.clear()
-					localStorage.setItem("user", data.role);
+					// localStorage.setItem("user", data.role);
 					window.localStorage.setItem("currentUserID", data.userID);
 					window.localStorage.setItem("currentBasketID", data.userBasket);
 					window.localStorage.setItem("token", data.token);

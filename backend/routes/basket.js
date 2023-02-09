@@ -1,14 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-const BasketController = require("../controllers/orders");
+const BasketController = require("../controllers/basket");
 const Basket = require("../models/basket");
 
 router.get("/", BasketController.getAll);
 // router.post("/", OrdersController.createOrder);
 // router.get("/:orderID", OrdersController.getOrderByID)
 router.get("/filled/:orderID", BasketController.getOrderByIDFilled)
-router.post("/addBatch/:orderID", BasketController.addBatch);
+router.post("/addToBasket/:userID", BasketController.addToBasket)
+router.post("/updateBasket/:userID", BasketController.updateBasket)
+// router.post("/addBatch/:orderID", BasketController.addBatch);
 router.get("/getBatch/:batchID", BasketController.getBatch);
 router.get("/getBasketInfo/:orderID", BasketController.getBasketInfoByID);
 router.delete("/delete/batch/:batchID", BasketController.deleteBatchByID)

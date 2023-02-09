@@ -5,12 +5,10 @@ const storage = require('../firebaseConfig')
 
 const ItemsController = {
   getAll: (req, res) => {
-    console.log("GET ITEMS")
     Item.find(async (err, items) => {
       if (err) {
         throw err;
       }
-      console.log("items:", items)
       res.status(200).json({ items: items });
     });
   },

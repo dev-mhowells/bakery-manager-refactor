@@ -2,8 +2,6 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 
 export default function Item(props) {
-
-  console.log('THIS IS THE FOOD', props.food._id)
   // item name can be used as a reference because this
   // is passed to batch.. update by item name
 
@@ -13,7 +11,7 @@ export default function Item(props) {
   const [batchID, setBatchID] = useState(""); 
   const [quantityInBasket, setQuantityInBasket] = useState(); 
   const [basketID] = useState(window.localStorage.getItem("currentBasketID"));
-
+  const [userID] = useState(window.localStorage.getItem('currentUserID'))
 
   const changeCounter = (amount) =>{
     if ((counter > 0 && amount === -1) || (amount === +1)){
@@ -68,9 +66,11 @@ export default function Item(props) {
 //     }
 //   }
 
-  const addBatchToOrder = async () => {
-    console.log("BASKETID", basketID)
-      let response = await fetch(`/orders/addBatch/${basketID}`, {
+  // gets user's basket with userID, creates Batch,
+  // adds Batch to User Basket
+  const addToBasket= async () => {
+
+      let response = await fetch(`/orders/addToBasket/${userID}`, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'
@@ -81,7 +81,6 @@ export default function Item(props) {
         console.log("post failed, Error status:" + response.status)
       } else {
         let data = await response.json()
-        console.log("BATCH ORDER ADDED:", data)
         props.setUpdateBasket(!props.updateBasket)
         setBatchID(data.batchOrder._id)
       }
@@ -141,7 +140,8 @@ export default function Item(props) {
     else if (!inBasket && counter >0){
       changeBasketButtonText("In Basket")
       setInBasket(true)
-      addBatchToOrder();
+      // addBatchToOrder();
+      addToBasket();
       setQuantityInBasket(counter)
     }
   }

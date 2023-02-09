@@ -1,28 +1,25 @@
 const User = require("../models/user");
-const Order = require("../models/basket");
+const Basket = require("../models/basket");
 
 const UsersController = {
   getAll: (req, res) => {
-    console.log("GET ORDERS")
     User.find(async (err, users) => {
       if (err) {
         console.log(err)
         throw err;
       }
-      console.log("orders:", users)
       res.status(200).json({ users:  users });
     });
   },
   Create: (req, res) => {
     //Create a new basket for the user
-    const newBasket = new Order ({companyName: req.body.companyName, order: [], dateOfOrder:"", dateRequired :""})
+    const newBasket = new Basket ({companyName: req.body.companyName, order: [], dateOfOrder:"", dateRequired :""})
     newBasket.save(async (err) => {
       if (err) {
         throw err;
       }
     })
       
-    console.log("NEW BASKET ID: ", )
     const user = new User({
       companyName: req.body.companyName,
       email: req.body.email,
@@ -48,7 +45,7 @@ const UsersController = {
   },
   updateUserBasket: async (req,res) => {
     // creates new order with companyName as ref to user?
-    const newBasket = new Order ({companyName: req.body.companyName, order: [], dateOfOrder: "", dateRequired : ""})
+    const newBasket = new Basket ({companyName: req.body.companyName, order: [], dateOfOrder: "", dateRequired : ""})
     newBasket.save(async (err) => {
       if (err) {
         throw err;

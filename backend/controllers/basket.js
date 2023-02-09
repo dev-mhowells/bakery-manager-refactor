@@ -7,7 +7,7 @@ const Item = require("../models/item");
 
 const BasketController = {
   getAll: (req, res) => {
-    Order.find({userId: req.user_id})
+    Basket.find({userId: req.user_id})
     .exec((err, orders) => {
       const token = TokenGenerator.jsonwebtoken(req.user_id);
       if(err) return res.status(400).send(err);
@@ -43,15 +43,33 @@ const BasketController = {
   //     // res.status(201).json({Order: allOrders, token: token});
   //   }
   // )},
-  addBatch: async (req, res) => {
+  // addBatch: async (req, res) => {
+  //   // creates a batch
+  //   const orderID = req.params.orderID
+  //   const batchOrder = new BatchOrder(req.body);
+  //   batchOrder.save();
+  //   // adds a batch to the order passed in to params
+  //   await Basket.findByIdAndUpdate(orderID, { $push: { orders: batchOrder } });
+    
+  //   res.status(201).json({batchOrder: batchOrder})
+  // },
+  addToBasket: async (req, res) => {
     // creates a batch
-    const orderID = req.params.orderID
+    const userID = req.params.userID
+    const user = await User.findById(userID)
+    console.log('THIS IS OUR BASKET USER', user)
+    const basketID = user.currentBasketID
+
     const batchOrder = new BatchOrder(req.body);
     batchOrder.save();
     // adds a batch to the order passed in to params
-    await Basket.findByIdAndUpdate(orderID, { $push: { orders: batchOrder } });
+    await Basket.findByIdAndUpdate(basketID, { $push: { orders: batchOrder } });
     
     res.status(201).json({batchOrder: batchOrder})
+  },
+  updateBasket: async (req, res) => {
+    const userID = req.params.userID
+    const user = await User.findById(userID)
   },
   getBatch: async (req,res) => {
     const filter = { _id: req.params.batchID };
