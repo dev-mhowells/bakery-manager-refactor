@@ -102,24 +102,24 @@ export default function Item(props) {
     }
   }
   
-  const updateBatchOrder = async () =>{
-    let response = await fetch(`batchOrders/update/batch/${batchID}`, {
-      method: 'put',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({batchQuantity: counter})
-    })
-    if (response.status !== 202){
-      console.log("patch failed, Error status:" + response.status)
-    }
-    else{
-      console.log("Batch updated:" + response.status)
-      console.log("NEW AMOUNT:" + counter)
-      props.setUpdateBasket(!props.updateBasket)
+  // const updateBatchOrder = async () =>{
+  //   let response = await fetch(`batchOrders/update/batch/${batchID}`, {
+  //     method: 'put',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({batchQuantity: counter})
+  //   })
+  //   if (response.status !== 202){
+  //     console.log("patch failed, Error status:" + response.status)
+  //   }
+  //   else{
+  //     console.log("Batch updated:" + response.status)
+  //     console.log("NEW AMOUNT:" + counter)
+  //     props.setUpdateBasket(!props.updateBasket)
 
-      }
-    }
+  //     }
+  //   }
 
   const updateBasket = () => {
     //if remove item from basket
@@ -132,7 +132,7 @@ export default function Item(props) {
     //if in basket but quantity has been changed
     else if (inBasket && quantityInBasket !== counter){
       changeBasketButtonText("In Basket")
-      updateBatchOrder();
+      // updateBatchOrder();
       setInBasket(true)
       setQuantityInBasket(counter)
     }
@@ -163,7 +163,7 @@ export default function Item(props) {
         <p className='text-center text-black' data-cy="counter">{counter}</p>
         <button data-cy="increase-btn" className='btn btn-circle btn-sm bg-bone text-black' onClick={()=>{changeCounter(1)}}>+</button>
       </div>
-          <div data-cy="basket-btn" className="btn bg-bone text-black" onClick={() => updateBasket()}>{basketText}</div>
+          <div data-cy="basket-btn" className="btn bg-bone text-black" onClick={() => addToBasket()}>{basketText}</div>
       </div>
       </div>
     )

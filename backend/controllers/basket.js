@@ -54,17 +54,28 @@ const BasketController = {
   //   res.status(201).json({batchOrder: batchOrder})
   // },
   addToBasket: async (req, res) => {
-    // creates a batch
+    console.log('BASKET BODY', req.body)
+    // gets user's basketId
     const userID = req.params.userID
     const user = await User.findById(userID)
-    console.log('THIS IS OUR BASKET USER', user)
     const basketID = user.currentBasketID
-
+    // creates batch with body
     const batchOrder = new BatchOrder(req.body);
     batchOrder.save();
-    // adds a batch to the order passed in to params
-    await Basket.findByIdAndUpdate(basketID, { $push: { orders: batchOrder } });
-    
+    // finds the user's basket and fills orders
+    const basket = await Basket.findById(basketID).populate('orders').exec()
+    const allOrders = basket.orders
+    // gets the item name to check against
+    const incomingItem = req.body.itemName
+    // is there an item with incomingItem name in basket?
+    const orderToUpdate = allOrders.filter((order) => order.itemName === incomingItem)
+    // if no: create, else edit the item in the basket
+    if (orderToUpdate.length === 0) {
+      await Basket.findByIdAndUpdate(basketID, { $push: { orders: batchOrder } });
+    } else {
+      await BatchOrder.findByIdAndUpdate(orderToUpdate[0].id, {batchQuantity: req.body.batchQuantity})
+    }
+    // DOES THIS NEED TO RESPOND?
     res.status(201).json({batchOrder: batchOrder})
   },
   updateBasket: async (req, res) => {
