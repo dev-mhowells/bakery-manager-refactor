@@ -67,33 +67,40 @@ const BasketController = {
     const orderToUpdate = allOrders.filter(
       (order) => order.itemName === incomingItem
     );
-    // if no: create, else edit the item in the basket
-    if (orderToUpdate.length === 0) {
-      // check a batchQuantity has been selected, if not, return
-      // stops users from being able to add an item with 0 batchQuantity to basket
-      if (req.body.batchQuantity === 0) return;
-      // creates batch with body
-      const batchOrder = new BatchOrder(req.body);
-      await batchOrder.save();
-      await Basket.findByIdAndUpdate(basketID, {
-        $push: { orders: batchOrder },
-      });
-    } else if (req.body.batchQuantity === 0) {
-      // if user has removed all items of that name from basket, delete batchOrder
-      await BatchOrder.findByIdAndDelete(orderToUpdate[0].id);
-      // remove associated batchOrder from the user's basket
-      await Basket.updateMany(
-        { orders: orderToUpdate[0].id },
-        { $pull: { orders: orderToUpdate[0].id } }
-      );
-    } else {
-      // edit the order with the new quantity
-      await BatchOrder.findByIdAndUpdate(orderToUpdate[0].id, {
-        batchQuantity: req.body.batchQuantity,
-      });
-    }
 
-    res.status(201).json({ message: "ok" });
+    const update = async () => {
+      // if no: create, else edit the item in the basket
+      if (orderToUpdate.length === 0) {
+        let execute = true;
+        // check a batchQuantity has been selected, if not, return
+        // stops users from being able to add an item with 0 batchQuantity to basket
+        if (req.body.batchQuantity === 0) return;
+        // creates batch with body
+        const batchOrder = new BatchOrder(req.body);
+        await batchOrder.save();
+        await Basket.findByIdAndUpdate(basketID, {
+          $push: { orders: batchOrder },
+        });
+      } else if (req.body.batchQuantity === 0) {
+        // if user has removed all items of that name from basket, delete batchOrder
+        await BatchOrder.findByIdAndDelete(orderToUpdate[0].id);
+        // remove associated batchOrder from the user's basket
+        await Basket.updateMany(
+          { orders: orderToUpdate[0].id },
+          { $pull: { orders: orderToUpdate[0].id } }
+        );
+      } else {
+        // edit the order with the new quantity
+        await BatchOrder.findByIdAndUpdate(orderToUpdate[0].id, {
+          batchQuantity: req.body.batchQuantity,
+        });
+      }
+    };
+
+    await update();
+
+    const newBasket = await Basket.findById(basketID).populate("orders").exec();
+    res.status(201).json({ basket: newBasket });
   },
   updateBasket: async (req, res) => {
     const userID = req.params.userID;

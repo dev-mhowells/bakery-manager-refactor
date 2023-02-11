@@ -12,19 +12,20 @@ export default function Item(props) {
   const [quantityInBasket, setQuantityInBasket] = useState();
   const [basketID] = useState(window.localStorage.getItem("currentBasketID"));
   const [userID] = useState(window.localStorage.getItem("currentUserID"));
+  const [basket, setBasket] = useState("");
 
   const changeCounter = (amount) => {
     if ((counter > 0 && amount === -1) || amount === +1) {
       setCounter((prevCounter) => prevCounter + amount);
     }
 
-    if (counter === 0) {
-      changeBasketButtonText("Add to Basket");
-    } else if (!inBasket) {
-      changeBasketButtonText("Add to Basket");
-    } else {
-      changeBasketButtonText("Update Basket");
-    }
+    // if (counter === 0) {
+    //   changeBasketButtonText("Add to Basket");
+    // } else if (!inBasket) {
+    //   changeBasketButtonText("Add to Basket");
+    // } else {
+    //   changeBasketButtonText("Update Basket");
+    // }
   };
 
   //Fetch batch orders within basket
@@ -66,8 +67,11 @@ export default function Item(props) {
       let data = await response.json();
       props.setUpdateBasket(!props.updateBasket);
       // setBatchID(data.batchOrder._id);
+      setBasket(data.basket);
     }
   };
+
+  console.log("THIS IS UPDATED BASKET", basket);
 
   // const updateBasket = () => {
   //   //if remove item from basket
