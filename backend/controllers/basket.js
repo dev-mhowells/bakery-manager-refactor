@@ -1,9 +1,11 @@
 const BatchOrder = require("../models/BatchOrder");
 const Basket = require("../models/basket");
+const Baker = require("../models/baker");
 // const TokenGenerator = require("../models/token_generator");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const Item = require("../models/item");
+const { findByIdAndUpdate } = require("../models/item");
 
 const BasketController = {
   getAll: (req, res) => {
@@ -12,6 +14,31 @@ const BasketController = {
       if (err) return res.status(400).send(err);
       res.status(200).json({ orders: orders, token: token });
     });
+  },
+  placeOrder: async (req, res) => {
+    const BakerId = "63e7da7df62bd6b74d2cfe96";
+    const baker = await Baker.findById(BakerId);
+    console.log("THIS IS OUR BAKER", baker);
+
+    const userId = req.body.userId;
+    const user = await User.findById(userId);
+
+    const basketId = user.currentBasketID;
+    const basket = await Basket.findById(basketId);
+    console.log("THIS IS OUR BASKET", basket);
+    // add the confirmed order to the Baker
+    await Baker.updateOne(
+      { _id: BakerId },
+      { $push: { confirmedOrders: basket } }
+    );
+    // clear basket for user
+    await Basket.findByIdAndUpdate(basketId, {
+      orders: [],
+      dateOfOrder: "",
+      dateRequired: "",
+      totalPrice: 0,
+    });
+    res.status(200).json({ message: "ok" });
   },
   // createOrder: (req, res) => {
   //   User.find({_id: req.user_id }, function (err, docs)

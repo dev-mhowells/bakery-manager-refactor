@@ -2,6 +2,8 @@ import ClearLocalStorage from "./logout";
 import { Link } from "react-router-dom";
 
 export default function BakeryHome() {
+  // modal display - company, date ordered, date needed by, dropdown to show order
+
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="w-10/12 h-10/12 rounded-md bg-bone flex justify-center border-8 border-green p-2">

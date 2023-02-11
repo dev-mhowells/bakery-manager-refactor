@@ -11,6 +11,9 @@ const OrderForm = () => {
   const [orderSummary, setOrderSummary] = useState([]);
   const [dateNeededBy, setDateNeededBy] = useState(null);
   const [orderId, setOrderId] = useState("");
+  const [userId] = useState(window.localStorage.getItem("currentUserID"));
+
+  console.log("USER ID IN ORDERFORM PAGE", userId);
 
   useEffect(() => {
     if (token) {
@@ -36,6 +39,22 @@ const OrderForm = () => {
 
   // move basket into baker,
   // clear user basket
+
+  const placeOrder = (event) => {
+    console.log("ORDER PLACED");
+    event.preventDefault();
+    if (dateNeededBy !== null) {
+      fetch(`/orders/placeOrder`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+        }),
+      }).catch((error) => console.error(error));
+    }
+  };
 
   // updates order with the date
   const handleSubmit = (event) => {
@@ -226,7 +245,9 @@ const OrderForm = () => {
                 transition
                 duration-150
                 ease-in-out"
-                    onClick={handleSubmit}
+                    onClick={(e) => {
+                      placeOrder(e);
+                    }}
                   >
                     Send
                   </button>
