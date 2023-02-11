@@ -8,7 +8,7 @@ export default function Item(props) {
   const [counter, setCounter] = useState(0);
   const [basketText, setBasketText] = useState("Add to Basket");
   const [inBasket, setInBasket] = useState(false);
-  const [batchID, setBatchID] = useState("");
+  // const [batchID, setBatchID] = useState("");
   const [quantityInBasket, setQuantityInBasket] = useState();
   const [basketID] = useState(window.localStorage.getItem("currentBasketID"));
   const [userID] = useState(window.localStorage.getItem("currentUserID"));
@@ -19,14 +19,26 @@ export default function Item(props) {
       setCounter((prevCounter) => prevCounter + amount);
     }
 
-    // if (counter === 0) {
-    //   changeBasketButtonText("Add to Basket");
-    // } else if (!inBasket) {
-    //   changeBasketButtonText("Add to Basket");
-    // } else {
-    //   changeBasketButtonText("Update Basket");
-    // }
+    if (counter === 0) {
+      changeBasketButtonText("Add to Basket");
+    } else if (!inBasket) {
+      changeBasketButtonText("Add to Basket");
+    } else {
+      changeBasketButtonText("Update Basket");
+    }
   };
+
+  const buttonText = () => {
+    // find the right batch in the basket:
+    if (basket) {
+      const batchObj = basket.filter(
+        (batch) => batch.itemName === props.food.itemName
+      );
+      return batchObj;
+    } else return;
+  };
+
+  // console.log("ITEM FROM FUNC", buttonText());
 
   //Fetch batch orders within basket
   useEffect(() => {
@@ -37,7 +49,7 @@ export default function Item(props) {
           data[0].orders.forEach((element) => {
             if (element.itemName === props.food.itemName) {
               setInBasket(true);
-              setBatchID(element._id);
+              // setBatchID(element._id);
               changeBasketButtonText("In Basket");
               setCounter(element.batchQuantity);
               setQuantityInBasket(element.batchQuantity);
@@ -66,37 +78,10 @@ export default function Item(props) {
     } else {
       let data = await response.json();
       props.setUpdateBasket(!props.updateBasket);
-      // setBatchID(data.batchOrder._id);
-      setBasket(data.basket);
+      setBasket(data.basket.orders);
     }
   };
 
-  console.log("THIS IS UPDATED BASKET", basket);
-
-  // const updateBasket = () => {
-  //   //if remove item from basket
-  //   if (inBasket && quantityInBasket === counter){
-  //     changeBasketButtonText("Add to basket")
-  //     setInBasket(false)
-  //     setCounter(0)
-  //     // removeBatchFromOrder();
-  //   }
-  //   //if in basket but quantity has been changed
-  //   else if (inBasket && quantityInBasket !== counter){
-  //     changeBasketButtonText("In Basket")
-  //     // updateBatchOrder();
-  //     setInBasket(true)
-  //     setQuantityInBasket(counter)
-  //   }
-  //   //if not in basket
-  //   else if (!inBasket && counter >0){
-  //     changeBasketButtonText("In Basket")
-  //     setInBasket(true)
-  //     // addBatchToOrder();
-  //     addToBasket();
-  //     setQuantityInBasket(counter)
-  //   }
-  // }
   const changeBasketButtonText = (text) => setBasketText(text);
 
   return (
@@ -142,7 +127,7 @@ export default function Item(props) {
           className="btn bg-bone text-black"
           onClick={() => addToBasket()}
         >
-          {basketText}
+          UPDATE BASKET
         </div>
       </div>
     </div>
