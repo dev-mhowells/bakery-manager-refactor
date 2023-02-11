@@ -28,6 +28,7 @@ export default function Item(props) {
     }
   };
 
+  // USE THIS FUNCTION TO SET TEXT ON BUTTON
   const buttonText = () => {
     // find the right batch in the basket:
     if (basket) {
@@ -37,8 +38,6 @@ export default function Item(props) {
       return batchObj;
     } else return;
   };
-
-  // console.log("ITEM FROM FUNC", buttonText());
 
   //Fetch batch orders within basket
   useEffect(() => {
