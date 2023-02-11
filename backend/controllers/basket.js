@@ -69,6 +69,9 @@ const BasketController = {
     );
     // if no: create, else edit the item in the basket
     if (orderToUpdate.length === 0) {
+      // check a batchQuantity has been selected, if not, return
+      // stops users from being able to add an item with 0 batchQuantity to basket
+      if (req.body.batchQuantity === 0) return;
       // creates batch with body
       const batchOrder = new BatchOrder(req.body);
       await batchOrder.save();

@@ -18,7 +18,9 @@ export default function Item(props) {
       setCounter((prevCounter) => prevCounter + amount);
     }
 
-    if (!inBasket) {
+    if (counter === 0) {
+      changeBasketButtonText("Add to Basket");
+    } else if (!inBasket) {
       changeBasketButtonText("Add to Basket");
     } else {
       changeBasketButtonText("Update Basket");
@@ -63,7 +65,7 @@ export default function Item(props) {
     } else {
       let data = await response.json();
       props.setUpdateBasket(!props.updateBasket);
-      setBatchID(data.batchOrder._id);
+      // setBatchID(data.batchOrder._id);
     }
   };
 
