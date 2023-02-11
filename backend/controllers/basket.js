@@ -78,6 +78,11 @@ const BasketController = {
     } else if (req.body.batchQuantity === 0) {
       // if user has removed all items of that name from basket, delete batchOrder
       await BatchOrder.findByIdAndDelete(orderToUpdate[0].id);
+      // remove associated batchOrder from the user's basket
+      await Basket.updateMany(
+        { orders: orderToUpdate[0].id },
+        { $pull: { orders: orderToUpdate[0].id } }
+      );
     } else {
       // edit the order with the new quantity
       await BatchOrder.findByIdAndUpdate(orderToUpdate[0].id, {
