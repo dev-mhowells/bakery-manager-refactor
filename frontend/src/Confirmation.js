@@ -17,9 +17,9 @@ const Confirmation = () => {
     const basketID = window.localStorage.getItem("currentBasketID")
     fetch(`/orders/filled/${basketID}`, { 
       method: "get",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
     })
       .then(res => res.json())
       .then((data) => {
