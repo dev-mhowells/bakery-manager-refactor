@@ -53,7 +53,6 @@ const BasketController = {
   //   res.status(201).json({batchOrder: batchOrder})
   // },
   addToBasket: async (req, res) => {
-    console.log("BASKET BODY QUANT", req.body.batchQuantity);
     // gets user's basketId
     const userID = req.params.userID;
     const user = await User.findById(userID);
@@ -70,19 +69,22 @@ const BasketController = {
     );
     // if no: create, else edit the item in the basket
     if (orderToUpdate.length === 0) {
-      // creates batch with body - MOVE TO FIRST IF BLOCK
+      // creates batch with body
       const batchOrder = new BatchOrder(req.body);
       await batchOrder.save();
       await Basket.findByIdAndUpdate(basketID, {
         $push: { orders: batchOrder },
       });
+    } else if (req.body.batchQuantity === 0) {
+      // if user has removed all items of that name from basket, delete batchOrder
+      await BatchOrder.findByIdAndDelete(orderToUpdate[0].id);
     } else {
+      // edit the order with the new quantity
       await BatchOrder.findByIdAndUpdate(orderToUpdate[0].id, {
         batchQuantity: req.body.batchQuantity,
       });
     }
-    // DOES THIS NEED TO RESPOND?
-    // res.status(201).json({ batchOrder: batchOrder });
+
     res.status(201).json({ message: "ok" });
   },
   updateBasket: async (req, res) => {
