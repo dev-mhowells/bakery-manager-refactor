@@ -16,16 +16,16 @@ const BasketController = {
     });
   },
   placeOrder: async (req, res) => {
+    // hardcoded BakerId because app currently has only one admin/baker
     const BakerId = "63e7da7df62bd6b74d2cfe96";
     const baker = await Baker.findById(BakerId);
-    console.log("THIS IS OUR BAKER", baker);
 
     const userId = req.body.userId;
     const user = await User.findById(userId);
 
     const basketId = user.currentBasketID;
     const basket = await Basket.findById(basketId);
-    console.log("THIS IS OUR BASKET", basket);
+
     // add the confirmed order to the Baker
     await Baker.updateOne(
       { _id: BakerId },
