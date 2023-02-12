@@ -2,7 +2,7 @@ import "./styles.css";
 import React from "react";
 import { useState, useEffect } from "react";
 import Item from "./Item";
-import Basket from "./Basket/Basket";
+import Basket from "./Components/Basket";
 
 function App() {
   const [items, setItems] = useState([]);
