@@ -9,7 +9,6 @@ import OrderForm from "./orderForm";
 import Confirmation from "./Confirmation";
 // import { Navigate } from "react-router-dom";
 import LogInForm from "./login";
-import Profile from "./profile";
 import BakeryHome from "./BakeryHome";
 
 // const storage = localStorage.getItem('user')
@@ -45,10 +44,6 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
   },
   {
     path: "/bakery",
