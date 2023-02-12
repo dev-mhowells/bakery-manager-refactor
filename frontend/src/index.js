@@ -6,7 +6,7 @@ import AddItem from "./Components/addItem/AddItem";
 import Signup from "./Signup";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import OrderForm from "./orderForm";
-import Confirmation from "./Confirmation";
+import Confirmation from "./pages/confirmation/Confirmation";
 // import { Navigate } from "react-router-dom";
 import LogInForm from "./login";
 import BakeryHome from "./BakeryHome";

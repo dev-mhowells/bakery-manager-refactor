@@ -61,17 +61,7 @@ export default function BakeryHome() {
                     <th>Amount payed</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {/* <tr>
-                    <th>1</th>
-                    <td>Cy Ganderton</td>
-                    <td>
-                      Quality <br></br>Control Specialist
-                    </td>
-                    <td>Littel, Schaden and Vandervort</td>
-                  </tr> */}
-                  {allOrders}
-                </tbody>
+                <tbody>{allOrders}</tbody>
                 <tfoot>
                   <tr>
                     <th></th>
@@ -90,8 +80,6 @@ export default function BakeryHome() {
             <img src="logoBM8.png" alt="logo" class="rounded-full" />
           </figure>
           <div className="card-body items-center text-center bg-darkgreen">
-            {/* <h2 className="card-title">Shoes!</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p> */}
             <div className="card-actions">
               <Link to="/addItem" className="btn-block">
                 <button class="btn bg-beige text-bone btn-block">

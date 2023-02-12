@@ -1,13 +1,10 @@
-import "./styles.css";
+import "../../styles.css";
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Confirmation = () => {
-  const [token, setToken] = useState(window.localStorage.getItem("token"));
-  const [companyName, setCompanyName] = useState("");
   const [orderSummary, setOrderSummary] = useState([]);
-  const [dateNeededBy, setDateNeededBy] = useState(null);
   const [orderId, setOrderId] = useState("");
   const [userId, setUserId] = useState(
     window.localStorage.getItem("currentUserID")
@@ -19,7 +16,6 @@ const Confirmation = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setCompanyName(data.companyName);
         setOrderSummary(data.orders);
         setOrderId(data._id);
       });
@@ -84,7 +80,6 @@ const Confirmation = () => {
       </div>
       <div className="flex mt-20 place-content-evenly">
         <div className=" card bg-lightgreen drop-shadow-xl place-content-center border-beige w-100">
-          {/* <figure><img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure> */}
           <div className="card-body">
             <div className="text-center">
               <h1 className="mb-12 text-3xl text-center font-heading">
@@ -100,8 +95,6 @@ const Confirmation = () => {
               </h2>
             </div>
             <h2 className="text-center orderID">Order ID: {orderId}</h2>
-
-            {/* <p className="text-center order-name" data-cy="order contents"></p> */}
             <div className="overflow-x-auto">
               <table className="table w-full">
                 <thead>
