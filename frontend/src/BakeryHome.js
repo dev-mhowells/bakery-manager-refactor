@@ -1,8 +1,20 @@
 import ClearLocalStorage from "./logout";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function BakeryHome() {
   // modal display - company, date ordered, date needed by, dropdown to show order
+
+  const [confirmedOrders, setConfirmedOrders] = useState([]);
+  useEffect(() => {
+    fetch("/bakers/getOrders", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => setConfirmedOrders(data));
+  }, []);
+
+  console.log("THESE ARE TEH CONFIRMED ORDERS", confirmedOrders);
 
   return (
     <div className="flex items-center justify-center h-screen">

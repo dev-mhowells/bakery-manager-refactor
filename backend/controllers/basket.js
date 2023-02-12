@@ -24,12 +24,22 @@ const BasketController = {
     const user = await User.findById(userId);
 
     const basketId = user.currentBasketID;
-    const basket = await Basket.findById(basketId);
+    const basket = await Basket.findById(basketId).populate("orders").exec();
+
+    const newBasket = new Basket({
+      companyName: basket.companyName,
+      orders: basket.orders,
+      dateOfOrder: basket.dateOfOrder,
+      dateRequired: basket.dateRequired,
+      totalPrice: basket.totalPrice,
+    });
+
+    await newBasket.save();
 
     // add the confirmed order to the Baker
     await Baker.updateOne(
       { _id: BakerId },
-      { $push: { confirmedOrders: basket } }
+      { $addToSet: { confirmedOrders: newBasket } }
     );
     // clear basket for user
     await Basket.findByIdAndUpdate(basketId, {
