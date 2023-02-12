@@ -113,14 +113,6 @@ const BasketController = {
     res.status(200).json(basket);
   },
 
-  // uses basket ID
-  getOrderByIDFilled: async (req, res) => {
-    const orderID = req.params.orderID;
-    let order = await Basket.findById(orderID).populate("orders").exec();
-    console.log("ORDER:", order);
-    res.status(200).json(order);
-  },
-
   updateTotal: async (req, res) => {
     const userId = req.params.userId;
 
