@@ -106,7 +106,6 @@ const BasketController = {
   // uses basket ID // rename - getBasketByUserId
   getBasketInfoByID: async (req, res) => {
     const userId = req.params.userId;
-    console.log("this is the userId", userId);
 
     // const user = await User.findById(userId);
     const user = await User.findOne({ _id: userId });
@@ -132,6 +131,23 @@ const BasketController = {
     await Basket.findByIdAndUpdate(req.params.order_id, update);
     const order = await Basket.find(filter);
     res.status(202).json(order);
+  },
+
+  updateTotal: async (req, res) => {
+    const userId = req.params.userId;
+
+    // const user = await User.findById(userId);
+    const user = await User.findOne({ _id: userId });
+    const basketID = user.currentBasketID;
+
+    const updatedBasket = await Basket.findByIdAndUpdate(
+      { _id: basketID },
+      { totalPrice: req.body.totalPrice }
+    );
+
+    console.log(updatedBasket);
+
+    res.status(200).json(updatedBasket);
   },
 };
 

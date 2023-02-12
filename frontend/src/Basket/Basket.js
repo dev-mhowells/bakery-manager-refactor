@@ -6,9 +6,6 @@ import { useState, useEffect } from "react";
 
 export default function Basket(props) {
   const [batchOrders, setBatchOrders] = useState([]);
-  const [basketID, setBasketID] = useState(
-    window.localStorage.getItem("currentBasketID")
-  );
   const [userId, setUserId] = useState(
     window.localStorage.getItem("currentUserID")
   );
@@ -45,21 +42,18 @@ export default function Basket(props) {
   });
 
   const Checkout = async () => {
-    let response = await fetch(`/orders/update/totalPrice/${basketID}`, {
+    let response = await fetch(`/orders/updateTotal/${userId}`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ totalPrice: getTotalPrice() }),
     });
-    if (response.status !== 202) {
+    if (response.status !== 200) {
       console.log("post failed, Error status:" + response.status);
     } else {
       console.log("price updated ", getTotalPrice());
     }
-
-    window.localStorage.setItem("currentBasketID", basketID);
-    console.log("checkout");
   };
 
   const basketMenu = (

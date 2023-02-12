@@ -9,6 +9,7 @@ router.post("/addToBasket/:userID", BasketController.addToBasket);
 router.get("/getBatch/:batchID", BasketController.getBatch);
 router.get("/getBasketInfo/:userId", BasketController.getBasketInfoByID);
 router.put("/update/totalPrice/:order_id", BasketController.updateOrderPrice);
+router.put("/updateTotal/:userId", BasketController.updateTotal);
 router.post("/placeOrder", BasketController.placeOrder);
 
 module.exports = router;

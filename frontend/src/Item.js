@@ -39,25 +39,6 @@ export default function Item(props) {
     } else return;
   };
 
-  //Fetch batch orders within basket
-  // useEffect(() => {
-  //   if (basketID) {
-  //     fetch(`/orders/getBasketInfo/${basketID}`, {})
-  //       .then((response) => response.json())
-  //       .then(async (data) => {
-  //         data[0].orders.forEach((element) => {
-  //           if (element.itemName === props.food.itemName) {
-  //             setInBasket(true);
-  //             // setBatchID(element._id);
-  //             changeBasketButtonText("In Basket");
-  //             setCounter(element.batchQuantity);
-  //             setQuantityInBasket(element.batchQuantity);
-  //           }
-  //         });
-  //       });
-  //   }
-  // }, [props.updateBasket]);
-
   // sets counter to value in basket and provides data needed to change
   // button text (temporarily unimplemented feature)
   useEffect(() => {
@@ -67,7 +48,6 @@ export default function Item(props) {
         data.orders.forEach((element) => {
           if (element.itemName === props.food.itemName) {
             setInBasket(true);
-            // setBatchID(element._id);
             changeBasketButtonText("In Basket");
             setCounter(element.batchQuantity);
             setQuantityInBasket(element.batchQuantity);
