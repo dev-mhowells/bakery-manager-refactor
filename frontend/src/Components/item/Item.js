@@ -2,15 +2,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 export default function Item(props) {
-  // item name can be used as a reference because this
-  // is passed to batch.. update by item name
+  // code structure re: basket text kept here to build on
 
   const [counter, setCounter] = useState(0);
   const [basketText, setBasketText] = useState("Add to Basket");
   const [inBasket, setInBasket] = useState(false);
-  // const [batchID, setBatchID] = useState("");
   const [quantityInBasket, setQuantityInBasket] = useState();
-  const [basketID] = useState(window.localStorage.getItem("currentBasketID"));
   const [userID] = useState(window.localStorage.getItem("currentUserID"));
   const [basket, setBasket] = useState("");
 
@@ -28,7 +25,6 @@ export default function Item(props) {
     }
   };
 
-  // USE THIS FUNCTION TO SET TEXT ON BUTTON
   const buttonText = () => {
     // find the right batch in the basket:
     if (basket) {

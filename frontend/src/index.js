@@ -2,18 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./styles.css";
 import App from "./pages/Storefront";
-import AddItem from "./Components/addItem/AddItem";
+import AddItem from "./pages/addItem/AddItem";
 import Signup from "./Signup";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import OrderForm from "./orderForm";
 import Confirmation from "./pages/confirmation/Confirmation";
-// import { Navigate } from "react-router-dom";
 import LogInForm from "./login";
 import BakeryHome from "./pages/BakeryHome";
 
-// const storage = localStorage.getItem('user')
-// console.log('this is storage', storage)
-console.log("this is user from Index", window.localStorage.getItem("user"));
 const user = window.localStorage.getItem("user");
 
 const router = createBrowserRouter([
@@ -39,7 +35,6 @@ const router = createBrowserRouter([
   {
     path: "/addItem",
     element: user === "customer" ? <AddItem /> : <App />,
-    // element: <AddItem />
   },
   {
     path: "/signup",
