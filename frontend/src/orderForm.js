@@ -6,42 +6,30 @@ import { useNavigate } from "react-router-dom";
 
 const OrderForm = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [companyName, setCompanyName] = useState("");
   const [orderSummary, setOrderSummary] = useState([]);
   const [dateNeededBy, setDateNeededBy] = useState(null);
   const [orderId, setOrderId] = useState("");
   const [userId] = useState(window.localStorage.getItem("currentUserID"));
 
-  console.log("USER ID IN ORDERFORM PAGE", userId);
-
   useEffect(() => {
-    if (token) {
-      const basketID = window.localStorage.getItem("currentBasketID");
-      fetch(`/orders/filled/${basketID}`, {
-        method: "get",
-        // headers: {
-        // Authorization: `Bearer ${token}`,
-        // },
+    const basketID = window.localStorage.getItem("currentBasketID");
+    fetch(`/orders/filled/${basketID}`, {
+      method: "get",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCompanyName(data.companyName);
+        setOrderSummary(data.orders);
+        setOrderId(data._id);
       })
-        .then((res) => res.json())
-        .then((data) => {
-          setToken(window.localStorage.getItem("token"));
-          setCompanyName(data.companyName);
-          setOrderSummary(data.orders);
-          setOrderId(data._id);
-        })
-        .catch((error) => console.error(error));
-    } else {
-      // navigate("/ABC");
-    }
+      .catch((error) => console.error(error));
   }, []);
 
   // move basket into baker,
   // clear user basket
 
   const placeOrder = (event) => {
-    console.log("ORDER PLACED");
     event.preventDefault();
     if (dateNeededBy !== null) {
       fetch(`/orders/placeOrder`, {
@@ -55,50 +43,6 @@ const OrderForm = () => {
       }).catch((error) => console.error(error));
     }
   };
-
-  // updates order with the date
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   if (dateNeededBy !== null) {
-  //     fetch(`/orders/update/${orderId}`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         dateRequired: dateNeededBy,
-  //       }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log("ORDER DATE UPDATE RESPONSE:", data);
-  //       })
-  //       .catch((error) => console.error(error));
-
-  //     // creates a new Order/Basket and updates currentBasket of User
-  //     // with new basket
-  //     fetch(`/users/${window.localStorage.getItem("currentUserID")}`, {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ companyName }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log("CURRENT BASKET UPDATED:", data[0].currentBasketID);
-  //         window.localStorage.setItem(
-  //           "currentBasketID",
-  //           data[0].currentBasketID
-  //         );
-  //         console.log(
-  //           "LOCAL STORAGE:",
-  //           window.localStorage.getItem("currentBasketID")
-  //         );
-  //         navigate("/confirmation");
-  //       });
-  //   }
-  // };
 
   const orderSummaryDisplay = orderSummary.map(
     ({ batchQuantity, itemName, pricePerBatch }) => {
