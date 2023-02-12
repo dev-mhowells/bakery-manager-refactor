@@ -96,13 +96,6 @@ const BasketController = {
     res.status(201).json({ basket: newBasket });
   },
 
-  getBatch: async (req, res) => {
-    const filter = { _id: req.params.batchID };
-    const batch = await BatchOrder.find(filter);
-    // console.log("batch: ", batch)
-    res.json(batch);
-  },
-
   // uses basket ID // rename - getBasketByUserId
   getBasketInfoByID: async (req, res) => {
     const userId = req.params.userId;
@@ -123,14 +116,6 @@ const BasketController = {
     let order = await Basket.findById(orderID).populate("orders").exec();
     console.log("ORDER:", order);
     res.status(200).json(order);
-  },
-
-  updateOrderPrice: async (req, res) => {
-    const filter = { _id: req.params.order_id };
-    const update = { totalPrice: req.body.totalPrice };
-    await Basket.findByIdAndUpdate(req.params.order_id, update);
-    const order = await Basket.find(filter);
-    res.status(202).json(order);
   },
 
   updateTotal: async (req, res) => {
