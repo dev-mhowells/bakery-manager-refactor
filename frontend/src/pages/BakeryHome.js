@@ -1,4 +1,3 @@
-import ClearLocalStorage from "../logout";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -12,6 +11,10 @@ export default function BakeryHome() {
       .then((res) => res.json())
       .then((data) => setConfirmedOrders(data.confirmedOrders));
   }, []);
+
+  const clearLocalStorage = () => {
+    localStorage.clear();
+  };
 
   const allOrders = confirmedOrders?.map((order, index) => {
     const batches = order.orders.map((batch) => {
@@ -93,7 +96,7 @@ export default function BakeryHome() {
                 <label>Home page</label>
               </Link>
               <Link to="/login" className="btn text-bone bg-beige btn-block">
-                <label onClick={ClearLocalStorage}>Logout</label>
+                <label onClick={clearLocalStorage}>Logout</label>
               </Link>
             </div>
           </div>

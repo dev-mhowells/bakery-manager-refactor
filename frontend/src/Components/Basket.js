@@ -16,7 +16,7 @@ export default function Basket(props) {
       });
   }, [props.updateBasket]);
 
-  const ClearLocalStorage = () => {
+  const clearLocalStorage = () => {
     localStorage.clear();
   };
 
@@ -121,7 +121,7 @@ export default function Basket(props) {
                     </a>
                   </li>
                   <li>
-                    <a href="/login" onClick={() => ClearLocalStorage()}>
+                    <a href="/login" onClick={() => clearLocalStorage()}>
                       Logout
                     </a>
                   </li>

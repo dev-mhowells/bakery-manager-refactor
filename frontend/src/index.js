@@ -7,7 +7,7 @@ import Signup from "./Signup";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import OrderForm from "./orderForm";
 import Confirmation from "./pages/confirmation/Confirmation";
-import LogInForm from "./login";
+import LogInForm from "./pages/Login";
 import BakeryHome from "./pages/BakeryHome";
 
 const user = window.localStorage.getItem("user");

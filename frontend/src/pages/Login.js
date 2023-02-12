@@ -1,4 +1,4 @@
-import "./styles.css";
+// import "./styles.css";
 import React from "react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
@@ -19,7 +19,6 @@ export default function LogInForm({}) {
       body: JSON.stringify({ email: email, password: password }),
     });
     if (response.status !== 201) {
-      console.log("oop");
       navigate("/login");
     } else {
       let data = await response.json();
@@ -142,5 +141,3 @@ export default function LogInForm({}) {
     </div>
   );
 }
-
-//TODO link to the login backend branch
