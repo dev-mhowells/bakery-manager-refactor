@@ -5,7 +5,7 @@ import App from "./pages/Storefront";
 import AddItem from "./pages/addItem/AddItem";
 import Signup from "./Signup";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import OrderForm from "./orderForm";
+import OrderForm from "./pages/orderForm/OrderForm";
 import Confirmation from "./pages/confirmation/Confirmation";
 import LogInForm from "./pages/Login";
 import BakeryHome from "./pages/BakeryHome";

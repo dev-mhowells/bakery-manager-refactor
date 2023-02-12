@@ -1,15 +1,12 @@
-import "./styles.css";
 import React from "react";
-// import OrderSummaryItem from './orderSummaryItem'
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const OrderForm = () => {
   const navigate = useNavigate();
   const [companyName, setCompanyName] = useState("");
   const [orderSummary, setOrderSummary] = useState([]);
-  const [dateNeededBy, setDateNeededBy] = useState(null);
-  const [orderId, setOrderId] = useState("");
+  const [dateNeededBy, setDateNeededBy] = useState("");
   const [userId] = useState(window.localStorage.getItem("currentUserID"));
 
   useEffect(() => {
@@ -20,7 +17,6 @@ const OrderForm = () => {
       .then((data) => {
         setCompanyName(data.companyName);
         setOrderSummary(data.orders);
-        setOrderId(data._id);
       })
       .catch((error) => console.error(error));
   }, []);
@@ -31,7 +27,7 @@ const OrderForm = () => {
 
   const placeOrder = (event) => {
     event.preventDefault();
-    if (dateNeededBy !== null) {
+    if (dateNeededBy !== "") {
       fetch(`/orders/placeOrder`, {
         method: "POST",
         headers: {
