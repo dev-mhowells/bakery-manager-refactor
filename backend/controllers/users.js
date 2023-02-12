@@ -2,7 +2,8 @@ const User = require("../models/user");
 const Basket = require("../models/basket");
 
 const UsersController = {
-  Create: (req, res) => {
+  
+  create: (req, res) => {
     //Create a new basket for the user
     const newBasket = new Basket({
       companyName: req.body.companyName,

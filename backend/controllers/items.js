@@ -1,6 +1,4 @@
 const Item = require("../models/item");
-// const { ref, getDownloadURL, getStorage, uploadBytes } = require("firebase/storage");
-// const storage = require('../firebaseConfig')
 
 const ItemsController = {
   getAll: (req, res) => {

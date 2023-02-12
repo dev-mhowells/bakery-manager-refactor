@@ -1,11 +1,7 @@
 const BatchOrder = require("../models/BatchOrder");
 const Basket = require("../models/basket");
 const Baker = require("../models/baker");
-// const TokenGenerator = require("../models/token_generator");
-const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const Item = require("../models/item");
-const { findByIdAndUpdate } = require("../models/item");
 
 const BasketController = {
   placeOrder: async (req, res) => {
