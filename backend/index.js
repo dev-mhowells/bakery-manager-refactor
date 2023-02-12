@@ -3,7 +3,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const itemsRouter = require("./routes/items");
 const basketRouter = require("./routes/basket");
-const batchOrdersRouter = require("./routes/batchOrders");
 const bakersRouter = require("./routes/bakers");
 const usersRouter = require("./routes/users");
 const tokensRouter = require("./routes/tokens");
@@ -13,7 +12,6 @@ const app = express();
 
 // Set up mongoose connection
 mongoose.set("strictQuery", false);
-// const mongoDB = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@cluster0.ds0ycgm.mongodb.net/${process.env.DATABASE}?retryWrites=true&w=majority`;
 const mongoDB = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.PASSWORD}@bakery-manager.fmzfczg.mongodb.net/${process.env.DATABASE}?retryWrites=true&w=majority`;
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });

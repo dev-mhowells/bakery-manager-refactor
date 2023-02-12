@@ -5,5 +5,6 @@ const UsersController = require("../controllers/users");
 
 router.post("/", UsersController.Create);
 router.get("/:userID", UsersController.getUserByID);
+router.get('/getInvoice/:userId', UsersController.getInvoice)
 
 module.exports = router;

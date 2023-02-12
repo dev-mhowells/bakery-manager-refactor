@@ -31,6 +31,9 @@ const BasketController = {
 
     await newBasket.save();
 
+    // new basket is user's most recent invoice:
+    await User.updateOne({ _id: userId }, { invoice: newBasket });
+
     // add the confirmed order (newBasket) to the Baker
     await Baker.updateOne(
       { _id: BakerId },

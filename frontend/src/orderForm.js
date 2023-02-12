@@ -2,7 +2,7 @@ import "./styles.css";
 import React from "react";
 // import OrderSummaryItem from './orderSummaryItem'
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const OrderForm = () => {
   const navigate = useNavigate();
@@ -27,6 +27,7 @@ const OrderForm = () => {
 
   // move basket into baker,
   // clear user basket
+  // create invoice
 
   const placeOrder = (event) => {
     event.preventDefault();
@@ -39,7 +40,11 @@ const OrderForm = () => {
         body: JSON.stringify({
           userId,
         }),
-      }).catch((error) => console.error(error));
+      })
+        .then(() => {
+          navigate("/confirmation");
+        })
+        .catch((error) => console.error(error));
     }
   };
 

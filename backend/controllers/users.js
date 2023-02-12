@@ -40,6 +40,16 @@ const UsersController = {
     const user = await User.findById(filter);
     res.status(200).json(user);
   },
+
+  getInvoice: async (req, res) => {
+    const userId = req.params.userId;
+
+    const user = await User.findOne({ _id: userId })
+      .populate({ path: "invoice", populate: { path: "orders" } })
+      .exec();
+
+    res.status(200).json(user.invoice);
+  },
 };
 
 module.exports = UsersController;
