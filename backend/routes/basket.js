@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const BasketController = require("../controllers/basket");
-const Basket = require("../models/basket");
 
 router.post("/addToBasket/:userID", BasketController.addToBasket);
 router.get("/getBasketInfo/:userId", BasketController.getBasketInfoByID);

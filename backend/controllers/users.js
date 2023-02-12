@@ -35,12 +35,6 @@ const UsersController = {
     });
   },
 
-  getUserByID: async (req, res) => {
-    const filter = { _id: req.params.userID };
-    const user = await User.findById(filter);
-    res.status(200).json(user);
-  },
-
   getInvoice: async (req, res) => {
     const userId = req.params.userId;
 
