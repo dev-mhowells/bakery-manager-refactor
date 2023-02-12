@@ -26,6 +26,8 @@ const BasketController = {
     const basketId = user.currentBasketID;
     const basket = await Basket.findById(basketId).populate("orders").exec();
 
+    // basket associated with User will be reset, this creates a new basket with
+    // the same order information and saves to DB
     const newBasket = new Basket({
       companyName: basket.companyName,
       orders: basket.orders,
@@ -36,12 +38,12 @@ const BasketController = {
 
     await newBasket.save();
 
-    // add the confirmed order to the Baker
+    // add the confirmed order (newBasket) to the Baker
     await Baker.updateOne(
       { _id: BakerId },
       { $addToSet: { confirmedOrders: newBasket } }
     );
-    // clear basket for user
+    // clear basket associated with user
     await Basket.findByIdAndUpdate(basketId, {
       orders: [],
       dateOfOrder: "",

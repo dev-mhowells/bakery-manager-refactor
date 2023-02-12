@@ -3,37 +3,89 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function BakeryHome() {
-  // modal display - company, date ordered, date needed by, dropdown to show order
-
   const [confirmedOrders, setConfirmedOrders] = useState([]);
+
   useEffect(() => {
     fetch("/bakers/getOrders", {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((data) => setConfirmedOrders(data));
+      .then((data) => setConfirmedOrders(data.confirmedOrders));
   }, []);
 
-  console.log("THESE ARE TEH CONFIRMED ORDERS", confirmedOrders);
+  const allOrders = confirmedOrders?.map((order, index) => {
+    const batches = order.orders.map((batch) => {
+      return (
+        <>
+          <p>
+            {batch.itemName} | x{batch.batchQuantity}
+          </p>
+          <br></br>
+        </>
+      );
+    });
+
+    return (
+      <tr>
+        <th>{index}</th>
+        <td className="font-bold">{order.companyName}</td>
+        <td>{batches}</td>
+        <td>£{order.totalPrice}</td>
+      </tr>
+    );
+  });
 
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="w-10/12 h-10/12 rounded-md bg-bone flex justify-center border-8 border-green p-2">
         {/* modal */}
-        <input type="checkbox" id="my-modal" className="modal-toggle" />
+        <input type="checkbox" id="my-modal-3" className="modal-toggle" />
         <div className="modal">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">
+          <div className="modal-box max-w-none">
+            <label
+              htmlFor="my-modal-3"
+              className="btn btn-sm btn-circle absolute right-2 top-2"
+            >
+              ✕
+            </label>
+            <h3 className="text-lg font-bold">
               Congratulations random Internet user!
             </h3>
             <p className="py-4">
               You've been selected for a chance to get one year of subscription
               to use Wikipedia for free!
             </p>
-            <div className="modal-action">
-              <label htmlFor="my-modal" className="btn">
-                Yay!
-              </label>
+
+            <div class="overflow-x-auto">
+              <table class="table table-compact w-full">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Company</th>
+                    <th>Order</th>
+                    <th>Amount payed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* <tr>
+                    <th>1</th>
+                    <td>Cy Ganderton</td>
+                    <td>
+                      Quality <br></br>Control Specialist
+                    </td>
+                    <td>Littel, Schaden and Vandervort</td>
+                  </tr> */}
+                  {allOrders}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th></th>
+                    <th>Company</th>
+                    <th>Order</th>
+                    <th>Amount payed</th>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
           </div>
         </div>
@@ -51,7 +103,7 @@ export default function BakeryHome() {
                   Add more items
                 </button>
               </Link>
-              <label for="my-modal" class="btn bg-beige text-bone btn-block">
+              <label for="my-modal-3" class="btn bg-beige text-bone btn-block">
                 Upcoming orders
               </label>
               <Link to="/" className="btn text-bone bg-beige btn-block">
