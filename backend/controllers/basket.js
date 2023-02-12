@@ -8,13 +8,6 @@ const Item = require("../models/item");
 const { findByIdAndUpdate } = require("../models/item");
 
 const BasketController = {
-  getAll: (req, res) => {
-    Basket.find({ userId: req.user_id }).exec((err, orders) => {
-      // const token = TokenGenerator.jsonwebtoken(req.user_id);
-      if (err) return res.status(400).send(err);
-      res.status(200).json({ orders: orders, token: token });
-    });
-  },
   placeOrder: async (req, res) => {
     // hardcoded BakerId because app currently has only one admin/baker
     const BakerId = "63e7da7df62bd6b74d2cfe96";
@@ -52,6 +45,7 @@ const BasketController = {
     });
     res.status(200).json({ message: "ok" });
   },
+
   addToBasket: async (req, res) => {
     // gets user's basketId
     const userID = req.params.userID;
@@ -101,16 +95,14 @@ const BasketController = {
     const newBasket = await Basket.findById(basketID).populate("orders").exec();
     res.status(201).json({ basket: newBasket });
   },
-  updateBasket: async (req, res) => {
-    const userID = req.params.userID;
-    const user = await User.findById(userID);
-  },
+
   getBatch: async (req, res) => {
     const filter = { _id: req.params.batchID };
     const batch = await BatchOrder.find(filter);
     // console.log("batch: ", batch)
     res.json(batch);
   },
+
   getBasketInfoByID: async (req, res) => {
     const filter = { _id: req.params.orderID };
     //Firstly filter the through the orders DB.
@@ -118,54 +110,14 @@ const BasketController = {
     const batchOrders = await Basket.find(filter).populate("orders").exec();
     res.status(200).json(batchOrders);
   },
+
   getOrderByIDFilled: async (req, res) => {
     const orderID = req.params.orderID;
     let order = await Basket.findById(orderID).populate("orders").exec();
     console.log("ORDER:", order);
     res.status(200).json(order);
   },
-  deleteBatchByID: async (req, res) => {
-    const orderID = req.body.orderID;
 
-    let order = await Basket.findById(orderID);
-    // console.log("ORDER:", order)
-    const filter = { _id: orderID };
-
-    //Remove batch from the orders array in Order DB
-    console.log("ORDER TO UPDATE: ", order);
-    const previousBatchOrders = order.orders;
-    console.log("PREVIOUS BATCH ORDERS", previousBatchOrders);
-    const newBatchOrders = previousBatchOrders.remove(req.params.batchID);
-    console.log("NEW BATCH ORDERS", newBatchOrders);
-    const update = { orders: newBatchOrders };
-    await Basket.findOneAndUpdate(filter, update);
-
-    //Remove batch order from BatchOrder DB
-    await BatchOrder.deleteOne({ _id: req.params.batchID });
-    console.log("Batches in Order", order.orders);
-    res.status(201).json(order);
-  },
-
-  // UPDATES ORDER WITH DATE ON CLICK CONFIRM
-  updateOrder: async (req, res) => {
-    const update = {
-      dateOfOrder: new Date(),
-      dateRequired: req.body.dateRequired,
-    };
-
-    // specifies that updated document should be returned
-    // from operation below
-    const options = { new: true };
-    const order = await Basket.findByIdAndUpdate(
-      req.params.order_id,
-      update,
-      options
-    )
-      .populate("orders")
-      .exec();
-
-    res.status(201).json({ order });
-  },
   updateOrderPrice: async (req, res) => {
     const filter = { _id: req.params.order_id };
     const update = { totalPrice: req.body.totalPrice };

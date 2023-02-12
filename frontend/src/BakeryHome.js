@@ -105,7 +105,7 @@ export default function BakeryHome() {
                 <label>Home page</label>
               </Link>
               <Link to="/login" className="btn text-bone bg-beige btn-block">
-                <label onClick={ClearLocalStorage()}>Logout</label>
+                <label onClick={ClearLocalStorage}>Logout</label>
               </Link>
             </div>
           </div>
