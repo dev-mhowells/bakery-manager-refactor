@@ -103,14 +103,22 @@ const BasketController = {
     res.json(batch);
   },
 
+  // uses basket ID // rename - getBasketByUserId
   getBasketInfoByID: async (req, res) => {
-    const filter = { _id: req.params.orderID };
-    //Firstly filter the through the orders DB.
-    //Then populate the variable 'batchOrders' with all in info in the orders field
-    const batchOrders = await Basket.find(filter).populate("orders").exec();
-    res.status(200).json(batchOrders);
+    const userId = req.params.userId;
+    console.log("this is the userId", userId);
+
+    // const user = await User.findById(userId);
+    const user = await User.findOne({ _id: userId });
+    const basketID = user.currentBasketID;
+
+    // finds the user's basket and fills orders
+    const basket = await Basket.findById(basketID).populate("orders").exec();
+
+    res.status(200).json(basket);
   },
 
+  // uses basket ID
   getOrderByIDFilled: async (req, res) => {
     const orderID = req.params.orderID;
     let order = await Basket.findById(orderID).populate("orders").exec();
