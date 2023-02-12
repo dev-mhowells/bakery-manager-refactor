@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./styles.css";
-import App from "./App";
+import App from "./pages/Storefront";
 import AddItem from "./Components/addItem/AddItem";
 import Signup from "./Signup";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";

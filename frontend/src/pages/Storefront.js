@@ -1,16 +1,12 @@
-import "./styles.css";
+import "../styles.css";
 import React from "react";
 import { useState, useEffect } from "react";
-import Item from "./Item";
-import Basket from "./Components/Basket";
+import Item from "../Item";
+import Basket from "../Components/Basket";
 
-function App() {
+export default function Storefront() {
   const [items, setItems] = useState([]);
   const [updateBasket, setUpdateBasket] = useState(false);
-  const [userID, setUserID] = useState(
-    window.localStorage.getItem("currentUserID")
-  );
-  const [user, setUser] = useState([]);
 
   useEffect(() => {
     // render bakery items on page
@@ -57,5 +53,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
