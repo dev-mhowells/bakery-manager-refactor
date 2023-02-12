@@ -32,13 +32,7 @@ export default function Basket(props) {
   };
 
   const basketDisplay = batchOrders?.map((item) => {
-    return (
-      <BasketItem
-        key={item._id}
-        updateBasket={props.updateBasket}
-        item={item}
-      ></BasketItem>
-    );
+    return <BasketItem key={item._id} item={item}></BasketItem>;
   });
 
   const Checkout = async () => {
