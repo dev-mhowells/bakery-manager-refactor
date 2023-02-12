@@ -9,7 +9,7 @@ import OrderForm from "./orderForm";
 import Confirmation from "./pages/confirmation/Confirmation";
 // import { Navigate } from "react-router-dom";
 import LogInForm from "./login";
-import BakeryHome from "./BakeryHome";
+import BakeryHome from "./pages/BakeryHome";
 
 // const storage = localStorage.getItem('user')
 // console.log('this is storage', storage)
