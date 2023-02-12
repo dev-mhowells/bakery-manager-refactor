@@ -13,8 +13,7 @@ const OrderForm = () => {
   const [userId] = useState(window.localStorage.getItem("currentUserID"));
 
   useEffect(() => {
-    const basketID = window.localStorage.getItem("currentBasketID");
-    fetch(`/orders/filled/${basketID}`, {
+    fetch(`/orders/getBasketInfo/${userId}`, {
       method: "get",
     })
       .then((res) => res.json())

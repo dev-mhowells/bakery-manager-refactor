@@ -127,8 +127,6 @@ export default function AddItem() {
         setFile('')
     }
 
-    console.log(isEditing)
-
     const editItem = async (url=null) => {
 
         const updatedItem = {itemName: item,
