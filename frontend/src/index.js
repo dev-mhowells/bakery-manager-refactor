@@ -10,8 +10,6 @@ import Confirmation from "./Confirmation";
 // import { Navigate } from "react-router-dom";
 import LogInForm from "./login";
 import Profile from "./profile";
-import BakeryIndex from "./bakeryIndex";
-import Orders from "./orders";
 import BakeryHome from "./BakeryHome";
 
 // const storage = localStorage.getItem('user')
@@ -53,16 +51,8 @@ const router = createBrowserRouter([
     element: <Profile />,
   },
   {
-    path: "/bakeryindex",
-    element: <BakeryIndex />,
-  },
-  {
     path: "/bakery",
     element: <BakeryHome />,
-  },
-  {
-    path: "/orders",
-    element: <Orders />,
   },
 ]);
 
