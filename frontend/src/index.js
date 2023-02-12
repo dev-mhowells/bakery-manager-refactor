@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./styles.css";
 import App from "./pages/Storefront";
 import AddItem from "./pages/addItem/AddItem";
-import Signup from "./Signup";
+import Signup from "./pages/Signup";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import OrderForm from "./pages/orderForm/OrderForm";
 import Confirmation from "./pages/confirmation/Confirmation";
