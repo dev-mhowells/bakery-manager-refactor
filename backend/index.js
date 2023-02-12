@@ -24,7 +24,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(express.json());
 app.use("/items", itemsRouter);
 app.use("/orders", basketRouter);
-app.use("/batchOrders", batchOrdersRouter);
+// app.use("/batchOrders", batchOrdersRouter);
 app.use("/bakers", bakersRouter);
 app.use("/users", usersRouter);
 app.use("/tokens", tokensRouter);
