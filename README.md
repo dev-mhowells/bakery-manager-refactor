@@ -1,10 +1,8 @@
 # Bakery Manger
 
-A full-stack MVP for an e-commerce system developed from scratch with a small team of 6 developers following Agile development methodology.The app allows wholesale clients to order from a bakery. The bakery’s dashboard allows management of incoming orders and uploading and editing stock which is displayed on the storefront. Wholesale clients are able to place orders, check-out and view invoices.
+A full-stack MVP for an e-commerce system developed from scratch with a small team of 6 developers following Agile development methodology. The app allows wholesale clients to order from a bakery. The bakery’s dashboard allows management of incoming orders and uploading and editing stock, which is displayed on the storefront. Wholesale clients are able to place orders, check-out and view invoices.
 
-# To get the project set up: in both frontend and backend run
-
-## Running the project
+# Setup
 
 Clone the project to your local machine.
 
@@ -18,7 +16,7 @@ Run npm install for both the frontend and backend folders to install the depende
 npm install
 ```
 
-You will need to create a firebase.config.js file in the src directory in the front end with your config set up for firebase storage. Here is an example of what the file should look like:
+You will need to create a firebase.config.js file in the src directory in the frontend with your config set up for firebase storage. Here is an example of what the file should look like:
 
 ```
 const { initializeApp } = require("firebase/app");
@@ -37,7 +35,7 @@ const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
 ```
 
-You will also need to create a .env.development file in the backend and create the following environment variables set to correct data needed to connect to your MongoDB database:
+You will also need to create a .env.development file in the backend and create the following environment variables set to the correct data needed to connect to your MongoDB database:
 
 ```
 MONGO_USERNAME=
@@ -53,9 +51,9 @@ npm start
 
 # The process behind creating Bakery Manager
 
-###### And how it came to be what it is now
-
 We began by using a whiteboarding tool to decide on an MVP which we wanted to have completed by the end of our first sprint. Then we planned out the database structure we wanted to use, wireframed out the pages we wanted, and started to think about how the front-end functionality would interact with the back-end and what kind of fetch requests we would want to make.
+
+###### The whiteboard several short sprints later:
 
 <img width="1099" alt="excalidraw" src="https://user-images.githubusercontent.com/106555227/217282376-014b9543-7b9f-4415-8669-b37a81c57311.png">
 
@@ -77,7 +75,7 @@ By the deadline we had managed to iterate on our original MVP and ended up with 
     - Proof of concept for a checkout system
     - Invoice generation
 
-## Some frontend screenshots
+## Some screenshots
 
 <img width="450" alt="截圖 2023-02-09 上午11 10 58" src="https://user-images.githubusercontent.com/114609139/217836349-d44952bb-4da9-4617-a1b6-6031f94c29ac.png">
 <img width="450" alt="截圖 2023-02-09 上午11 11 11" src="https://user-images.githubusercontent.com/114609139/217836347-ad89fbd6-8505-4f1f-81ec-1ee0efc7e6a9.png">
