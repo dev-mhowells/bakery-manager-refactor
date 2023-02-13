@@ -7,7 +7,7 @@ A full-stack MVP for an e-commerce system developed from scratch with a small te
 Clone the project to your local machine.
 
 ```
-git clone https://github.com/dev-mhowells/bakery-manager-refactored
+git clone https://github.com/dev-mhowells/bakery-manager-refactor
 ```
 
 Run npm install for both the frontend and backend folders to install the dependencies.
